@@ -16,15 +16,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         let tabBar = UITabBarController()
+    
+        Tab.allCases.forEach { (item) in
+            let presenter = PokemonListPresenter(model: item.model)
+            let vc = PokemonListViewController(presenter: presenter)
+            let navBar = UINavigationController(rootViewController: vc)
+            let item = UITabBarItem(title: nil, image: item.image, selectedImage: item.selectedImage)
+            item.imageInsets = UIEdgeInsets(top: 9, left: 0, bottom: -9, right: 0)
+            navBar.tabBarItem = item
+            tabBar.addChild(navBar)
+        }
         
-        let model = PokemonListTempModel()
-        let presenter = PokemonListPresenter(model: model)
-        let controller = PokemonListViewController(presenter: presenter)
-//        controller.hidesBottomBarWhenPushed = true
-        let navBar = UINavigationController(rootViewController: controller)
-//        navBar.navigationBar.isHidden = true
-        navBar.tabBarItem = UITabBarItem(tabBarSystemItem: .topRated, tag: 0)
-        tabBar.addChild(navBar)
+        tabBar.tabBar.barTintColor = UIColor(red:0.94, green:0.33, blue:0.31, alpha:1.00)
+        tabBar.tabBar.isTranslucent = false
+
+        tabBar.tabBar.unselectedItemTintColor = .white
+        tabBar.tabBar.tintColor = .white
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = tabBar
@@ -35,26 +42,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         return false
-    }
-    
-    func applicationWillResignActive(_ application: UIApplication) {
-        
-    }
-    
-    func applicationDidEnterBackground(_ application: UIApplication) {
-        
-    }
-    
-    func applicationWillEnterForeground(_ application: UIApplication) {
-        
-    }
-    
-    func applicationDidBecomeActive(_ application: UIApplication) {
-        
-    }
-    
-    func applicationWillTerminate(_ application: UIApplication) {
-        
     }
     
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {

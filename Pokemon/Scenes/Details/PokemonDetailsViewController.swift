@@ -19,7 +19,6 @@ final class PokemonDetailsViewController: UIViewController {
     @IBOutlet weak var weightLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
     
-    
     // MARK: - Properties
     
     let presenter: PokemonDetailsPresenter
@@ -43,7 +42,7 @@ final class PokemonDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationController?.navigationBar.tintColor = .white
         presenter.fillContent()
     }
-
 }
